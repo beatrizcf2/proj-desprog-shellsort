@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <title>Shell Sort - algoritimo de ordenação</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,700;1,400;1,700&family=Open+Sans+Condensed:ital,wght@0,300;1,300&family=Open+Sans:ital,wght@0,300;0,400;0,700;0,800;1,300;1,400;1,700;1,800&family=Oxygen+Mono&family=Poppins:ital,wght@0,300;0,700;1,300;1,700&display=swap">
+        <link rel="stylesheet" href="assets/css/reset.css">
+        <link rel="stylesheet" href="assets/css/highlight.css">
+        <link rel="stylesheet" href="assets/css/style.css">
+        <link rel="stylesheet" href="assets/css/color.css">
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <script async src="https://static.codepen.io/assets/embed/ei.js"></script>
+        <script src="assets/js/highlight.js"></script>
+        <script src="assets/js/script.js"></script>
+    </head>
+    <body>
+        <div class="container">
+            <header>
+                <a href="">abrir tudo</a>
+                <a href="">fechar tudo</a>
+            </header>
+            <main>
+
+<h1>Shell Sort - algoritimo de ordenação</h1>
+<h2>Primeira ideia</h2>
+<p>O shell sort trata-se de um refinamento do método de inserção que vimos em aula. Sua ideia é primeiro ordenar os elementos mais distantes uns dos outros e ir diminuindo o intervalo até que todos os elementos estejam adequadamente ordenados. Os intervalos sao diminuidos a partir da sequencia usada, que ira influenciar diretamente na complexidade do algoritmo.</p>
+<blockquote class="warning">
+<p>OBS</p>
+<p>Neste handout vamos implementar a sequencia original do shell sort, a qual o intervalo é dividido por dois a cada iteracao. Lembre-se que a escolha da sequencia irá variar de acordo com as necessidades de aplicacao desse algoritmo.</p>
+</blockquote>
+<p>Abaixo tem uma lista das possíveis sequencias utilizadas nesse algoritmo:</p>
+<ul>
+<li>Sequencia original do shell sort - N/2 … N/4 … N/2^x</li>
+<li>Outras</li>
+</ul>
+<p>Em outras palavras, a ideia geral é a seguinte:</p>
+<pre><code class="language-txt">intervalo = n/2
+para cada intervalo em v:
+    ordene os elementos separados pelo intervalo
+</code></pre>
+<p>Mas você nao falou que ele aplica o método de inserção? Cade o insertion sort nessa ideia?
+Calma, o insertion sort é aplicado a cada comparacao entre dois elementos separados por um intervalo. Assim, podemos dizer:</p>
+<pre><code class="language-txt">intervalo = n/2
+para cada intervalo em v:
+    aplique o insertion sort entre os elementos separados pelo intervalo
+</code></pre>
+<p>Se você não se lembra muito bem como funciona o método de insercao, vale a pena fazer uma pequena revisao.</p>
+<details class="answer">
+<summary>Revisão: Insertion sort</summary>
+</details>
+<blockquote class="question">
+<p>Exercício</p>
+<p>Implemente o shell sort em C. Suponha que os elementos são inteiros.</p>
+<details class="answer">
+<summary>Gabarito</summary>
+<pre><code class="language-c">void shellSort(int v[], int n) {
+    for (int h = n / 2; h &gt; 0; h /= 2) {
+        for (int i = h; i &lt; n; i += 1) {
+            int temp = v[i];
+            for (int j = i; j &gt;= h &amp;&amp; v[j - h] &gt; temp; j -= h) {
+                v[j] = v[j - h];
+            }
+            v[j] = temp;
+        }
+    }
+}
+</code></pre>
+</details>
+</blockquote>
+<blockquote class="question">
+<p>Exercício</p>
+<p>Estime a complexidade do algoritmo.</p>
+<blockquote class="warning">
+<p>Aviso</p>
+<p>Se precisar de ajuda, consulte o material da <a href="https://ensino.hashi.pro.br/desprog/aula/7/" target="_blank">aula 7</a>.</p>
+</blockquote>
+<details class="answer">
+<summary>Gabarito</summary>
+</details>
+</blockquote>
+<blockquote class="question">
+<p>Exercício</p>
+<p>Com base no que foi visto até agora, o que você consideraria vantagens desse algoritmo de ordenacao? e desvantagens?</p>
+<details class="answer">
+<summary>Gabarito</summary>
+<p>Vantagens:</p>
+<ul>
+<li>codigo simples</li>
+</ul>
+<p>Desvantagens:</p>
+<ul>
+<li>A complexidade, bem como o tempo de execução irão variar de acordo com o vetor inicial. O shellsort sera mais eficiente naqueles casos em que o vetor ja esta pre oprdenado</li>
+</ul>
+</details>
+</blockquote>
+
+
+            </main>
+            <footer>
+                <a href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">
+                    <img alt="CC BY-SA 4.0" src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png" title="Creative Commons Attribution-ShareAlike 4.0 International License"/>
+                </a>
+                © 2021 Marcelo Hashimoto
+            </footer>
+        </div>
+    </body>
+</html>
