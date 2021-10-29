@@ -1,0 +1,137 @@
+INICIO: { 9  0  7  2  5  4  6  3  8  1  }
+
+h = 5
+i = 5
+temp = 4
+    j = 5
+    Final segundo loop interno 0:{ 9  0  7  2  5  9  6  3  8  1  }
+Final primeiro loop interno 0:{ 4  0  7  2  5  9  6  3  8  1  }
+h = 5
+i = 6
+temp = 6
+Final primeiro loop interno 1:{ 4  0  7  2  5  9  6  3  8  1  }
+h = 5
+i = 7
+temp = 3
+    j = 7
+    Final segundo loop interno 0:{ 4  0  7  2  5  9  6  7  8  1  }
+Final primeiro loop interno 2:{ 4  0  3  2  5  9  6  7  8  1  }
+h = 5
+i = 8
+temp = 8
+Final primeiro loop interno 3:{ 4  0  3  2  5  9  6  7  8  1  }
+h = 5
+i = 9
+temp = 1
+    j = 9
+    Final segundo loop interno 0:{ 4  0  3  2  5  9  6  7  8  5  }
+Final primeiro loop interno 4:{ 4  0  3  2  1  9  6  7  8  5  }
+Final loop externo
+---------------------------------------------
+
+h = 2
+i = 2
+temp = 3
+    j = 2
+    Final segundo loop interno 0:{ 4  0  4  2  1  9  6  7  8  5  }
+Final primeiro loop interno 5:{ 3  0  4  2  1  9  6  7  8  5  }
+
+h = 2
+i = 3
+temp = 2
+Final primeiro loop interno 6:{ 3  0  4  2  1  9  6  7  8  5  }
+
+h = 2
+i = 4
+temp = 1
+    j = 4
+    Final segundo loop interno 0:{ 3  0  4  2  4  9  6  7  8  5  }
+    j = 2
+    Final segundo loop interno 1:{ 3  0  3  2  4  9  6  7  8  5  }
+Final primeiro loop interno 7:{ 1  0  3  2  4  9  6  7  8  5  }
+
+h = 2
+i = 5
+temp = 9
+Final primeiro loop interno 8:{ 1  0  3  2  4  9  6  7  8  5  }
+
+h = 2
+i = 6
+temp = 6
+Final primeiro loop interno 9:{ 1  0  3  2  4  9  6  7  8  5  }
+
+h = 2
+i = 7
+temp = 7
+    j = 7
+    Final segundo loop interno 0:{ 1  0  3  2  4  9  6  9  8  5  }
+Final primeiro loop interno 10:{ 1  0  3  2  4  7  6  9  8  5  }
+
+h = 2
+i = 8
+temp = 8
+Final primeiro loop interno 11:{ 1  0  3  2  4  7  6  9  8  5  }
+
+h = 2
+i = 9
+temp = 5
+    j = 9
+    Final segundo loop interno 0:{ 1  0  3  2  4  7  6  9  8  9  }
+    j = 7
+Final segundo loop interno 1:{ 1  0  3  2  4  7  6  7  8  9  }
+Final primeiro loop interno 12:{ 1  0  3  2  4  5  6  7  8  9  }
+Final loop externo
+---------------------------------------------
+
+h = 1
+i = 1
+temp = 0
+    j = 1
+    Final segundo loop interno 0:{ 1  1  3  2  4  5  6  7  8  9  }
+Final primeiro loop interno 13:{ 0  1  3  2  4  5  6  7  8  9  }
+
+h = 1
+i = 2
+temp = 3
+Final primeiro loop interno 14:{ 0  1  3  2  4  5  6  7  8  9  }
+
+h = 1
+i = 3
+temp = 2
+    j = 3
+    Final segundo loop interno 0:{ 0  1  3  3  4  5  6  7  8  9  }
+Final primeiro loop interno 15:{ 0  1  2  3  4  5  6  7  8  9  }
+
+h = 1
+i = 4
+temp = 4
+Final primeiro loop interno 16:{ 0  1  2  3  4  5  6  7  8  9  }
+
+h = 1
+i = 5
+temp = 5
+Final primeiro loop interno 17:{ 0  1  2  3  4  5  6  7  8  9  }
+
+h = 1
+i = 6
+temp = 6
+Final primeiro loop interno 18:{ 0  1  2  3  4  5  6  7  8  9  }
+
+h = 1
+i = 7
+temp = 7
+Final primeiro loop interno 19:{ 0  1  2  3  4  5  6  7  8  9  }
+
+h = 1
+i = 8
+temp = 8
+Final primeiro loop interno 20:{ 0  1  2  3  4  5  6  7  8  9  }
+
+h = 1
+i = 9
+temp = 9
+Final primeiro loop interno 21:{ 0  1  2  3  4  5  6  7  8  9  }
+Final loop externo
+---------------------------------------------
+Sorted array: 
+{ 0  1  2  3  4  5  6  7  8  9  }
