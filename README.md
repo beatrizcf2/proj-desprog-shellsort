@@ -6,5 +6,7 @@
 Explicando como funciona o algoritmo de ordenação ShellSort através de uma aula (simulada)
 
 Andresa Bicudo
+
 Beatriz Cabral
+
 Leonardo Malta
