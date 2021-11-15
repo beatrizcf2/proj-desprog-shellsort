@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <title>Shell Sort - algoritimo de ordenação</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,700;1,400;1,700&family=Open+Sans+Condensed:ital,wght@0,300;1,300&family=Open+Sans:ital,wght@0,300;0,400;0,700;0,800;1,300;1,400;1,700;1,800&family=Oxygen+Mono&family=Poppins:ital,wght@0,300;0,700;1,300;1,700&display=swap">
+        <link rel="stylesheet" href="assets/css/reset.css">
+        <link rel="stylesheet" href="assets/css/highlight.css">
+        <link rel="stylesheet" href="assets/css/style.css">
+        <link rel="stylesheet" href="assets/css/color.css">
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <script async src="https://static.codepen.io/assets/embed/ei.js"></script>
+        <script src="assets/js/highlight.js"></script>
+        <script src="assets/js/script.js"></script>
+    </head>
+    <body>
+        <div class="container">
+            <header>
+                <a href="">abrir tudo</a>
+                <a href="">fechar tudo</a>
+            </header>
+            <main>
+
+<h1>Shell Sort - algoritimo de ordenação</h1>
+<h2>Primeira ideia</h2>
+<p>Vocês se lembram do algoritmo de ordenação Insertion Sort?
+Ele funcionava muito bem para os casos em que a lista estava crescente ou quase, como no exemplo abaixo:</p>
+<p>INSERIR SLIDES DE EXEMPLO</p>
+<p>Mas para os outros casos ele não era o mais eficiente, mas também não era a pior escolha.
+Observe o exemplo abaixo. O que atrapalha essa situação?</p>
+<p>INSERIR SLIDES DE EXEMPLO (quando o shell vai ser melhor que ele)</p>
+<p>EXPLICAR COMO O SHELL É MELHOR AQUI</p>
+<p>O shell sort trata-se de um refinamento do método de inserção, mencionado anteriormente.
+Sua ideia é primeiro ordenar os elementos mais distantes uns dos outros e ir diminuindo o intervalo até que todos os elementos estejam adequadamente ordenados, que é uma das limitações do insertion sort. Como os intervalos são diminuídos a partir da sequência usada, isso irá influenciar diretamente na complexidade do algoritmo.</p>
+<blockquote class="warning">
+<p>OBS</p>
+<p>Neste handout vamos implementar a sequência original do shell sort, a qual o intervalo é dividido por dois a cada iteração. Lembre-se que a escolha da sequência irá variar de acordo com as necessidades de aplicação desse algoritmo.</p>
+</blockquote>
+<p>Abaixo tem uma lista das possíveis sequências utilizadas nesse algoritmo:</p>
+<ul>
+<li>Sequencia original do shell sort - N/2 … N/4 … N/2^x</li>
+<li>Hibbard’s - 0, 1, 3, 7, 15, 31 … 2x-1</li>
+<li>Papernov &amp; Stasevich’s - 1, 3, 5, 9, 17, 33 … 2x+1</li>
+<li>Knuth’s - 1, 4, 13,… (3k – 1) / 2</li>
+</ul>
+<p>A base do seu desenvolvimento se dá da seguinte maneira: em um vetor de n elementos determina-se um intervalo <em>h</em> que inicialmente começa em n/2. Esse intervalo é utilizado para comparar dois valores do vetor (ex: v[0] com v[h], v[1] com v[h+1] … v[h-1] com v[h + n/2 -1]). Essa comparação deve ser feita
+Nessa comparação, se o elemento de menor índice do vetor, for maior que o elemento de maior índice, inverte-se as posições.</p>
+<p>Após percorrido todo o vetor, divide-se o <em>h</em> em 2, e assim, as comparações serão em intervalos cada vez menores, até que o <em>h</em> seja 1, e a comparação de cada elemento do vetor, seja em relação com o elemento seguinte.</p>
+<p>Em outras palavras, a ideia geral é a seguinte:</p>
+<pre><code class="language-txt">intervalo = n/2
+para cada intervalo maior que 0:
+    para cada intervalo em v, enquanto h&gt;0:
+        ordene os elementos separados pelo intervalo
+    intervalo/=2
+</code></pre>
+<p>Mas você não falou que ele é um refinamento do método de inserção? Cadê o insertion sort nessa ideia?</p>
+<p>Se você não se lembra muito bem como funciona o método de inserção, vale a pena fazer uma pequena revisão.</p>
+<details class="answer">
+<summary>Revisão: Insertion sort</summary>
+<p>A ideia do insertion sort é bem similar a como ordenamos cartas de baralho. Um índice percorre todo o vetor e aloca os elementos em dois grupos: dos ordenados e dos não-ordenados.</p>
+<p>Primeiramente, assumimos que o primeiro elemento já está ordenado, e todo os outros elementos fazem parte do grupo dos não ordenados. E então, para cada elemento do grupo dos não-ordenados iremos retirá-lo e compará-lo com cada elemento do grupo dos elementos ordenados, ata que se encontre um elemento maior do que ele, podendo assim, inseri-lo no grupo dos elementos ordenados de modo a manter a ordem.</p>
+<p>Note que no insertion sort cada elemento é comparado com o elemento <strong>consecutivo</strong> a ele.</p>
+<figure class="img"><img src="img/insertion-sort1.png" alt=""></figure>
+</details>
+<blockquote class="question">
+<p>Exercicio</p>
+<p>Tente analisar em que situação o shell sort será igual ao insertion sort.</p>
+<p><em><strong>Dica:</strong></em> <em>está relacionado ao valor do intervalo.</em></p>
+<details class="answer">
+<summary>Gabarito</summary>
+<p>A partir do momento em que o intervalo é igual a 1, iremos comparar e mover elementos vizinhos um do outro, como acontece no caso do insertion sort.</p>
+</details>
+</blockquote>
+<p>Como mencionado, a ideia é que o vetor seja percorrido a cada iteração, e a cada iteração o valor do intervalo h seja diminuído, de acordo com a sequência escolhida, neste caso, dividido por 2 e arredondado para cima no caso em que a divisão não é inteira.</p>
+<figure class="img"><img src="img/shell-sort1.png" alt=""></figure>
+<p>Para percorrer o vetor a cada iteração, iremos inicialmente comparar os elementos v[i-h] e v[i], de forma a percorrer o vetor até que i seja igual a n-1.  Desta maneira, se v[i-h] for maior do que v[i], inverte-se a posição desses elementos. Para isso, é necessário armazenar v[i] em uma variável temporária, e se essa condição for satisfeita, copiar v[i-h] para v[i] e colocar a variável temporária em v[i - h] para que a troca seja feita.</p>
+<pre><code class="language-txt">intervalo = n/2
+para cada intervalo maior que 0:
+    i = intervalo
+    j = i-h
+    para cada intervalo em v enquanto i&lt;n:
+        temp = v[i]
+        se v[j]&gt;v[i]:
+            v[i] = v[j]
+        v[j] = temp 
+        i+=1
+        j=i-h
+    intervalo/=2
+</code></pre>
+<blockquote class="question">
+<p>Exercício</p>
+<p>Tente simular o algoritmo para o vetor abaixo. Como esta o vetor ao final de cada iteração do loop externo? E o tamanho do intervalo h?</p>
+<pre><code class="language-txt">    v = {3 5 8 1} 
+    n = 4
+</code></pre>
+<details class="answer">
+<summary>Gabarito</summary>
+<pre><code class="terminal nohighlight">fim da iteracao 1: v = {3 1 8 5}
+                   h = 2
+
+fim da iteracao 2: v = {1 3 5 8}
+                   h = 1
+
+</code></pre>
+</details>
+</blockquote>
+<p>Na verdade, está faltando algo - precisamos comparar TODOS os elementos distantes h um do outro a esquerda de i. Além disso observe que precisamos considerar apenas intervalos positivos, uma vez que a linguagem c não admite índices negativos.</p>
+<pre><code class="language-txt">intervalo = n/2
+para cada intervalo maior que 0:
+    i = intervalo
+    j = i
+    para cada intervalo em v enquanto i&lt;n:
+        temp = v[i]
+        enquanto v[j-h]&gt;v[i] e j&gt;=h:
+            v[j] = v[j-h]
+            j = j-h
+        v[j] = temp 
+        i+=1
+        
+    intervalo/=2
+</code></pre>
+<blockquote class="question">
+<p>Exercício</p>
+<p>Implemente o shell sort em C. Suponha que os elementos são inteiros.</p>
+<details class="answer">
+<summary>Gabarito</summary>
+<pre><code class="language-c">void shellSort(int v[], int n) {
+    for (int h = n / 2; h &gt; 0; h /= 2) {
+        for (int i = h; i &lt; n; i += 1) {
+            int temp = v[i];
+            for (int j = i; j &gt;= h &amp;&amp; v[j - h] &gt; temp; j -= h) {
+                v[j] = v[j - h];
+            }
+            v[j] = temp;
+        }
+    }
+}
+</code></pre>
+</details>
+</blockquote>
+<div class="animation"><img class="frame" src="img/shell/comparacao.gif" alt="1"><img class="frame" src="img/shell/shell1.png" alt="2"><img class="frame" src="img/shell/shell10.png" alt="3"><img class="frame" src="img/shell/shell11.png" alt="4"><img class="frame" src="img/shell/shell12.png" alt="5"><img class="frame" src="img/shell/shell13.png" alt="6"><img class="frame" src="img/shell/shell14.png" alt="7"><img class="frame" src="img/shell/shell15.png" alt="8"><img class="frame" src="img/shell/shell16.png" alt="9"><img class="frame" src="img/shell/shell17.png" alt="10"><img class="frame" src="img/shell/shell18.png" alt="11"><img class="frame" src="img/shell/shell19.png" alt="12"><img class="frame" src="img/shell/shell2.png" alt="13"><img class="frame" src="img/shell/shell20.png" alt="14"><img class="frame" src="img/shell/shell21.png" alt="15"><img class="frame" src="img/shell/shell22.png" alt="16"><img class="frame" src="img/shell/shell23.png" alt="17"><img class="frame" src="img/shell/shell24.png" alt="18"><img class="frame" src="img/shell/shell25.png" alt="19"><img class="frame" src="img/shell/shell26.png" alt="20"><img class="frame" src="img/shell/shell27.png" alt="21"><img class="frame" src="img/shell/shell28.png" alt="22"><img class="frame" src="img/shell/shell29.png" alt="23"><img class="frame" src="img/shell/shell3.png" alt="24"><img class="frame" src="img/shell/shell30.png" alt="25"><img class="frame" src="img/shell/shell31.png" alt="26"><img class="frame" src="img/shell/shell32.png" alt="27"><img class="frame" src="img/shell/shell33.png" alt="28"><img class="frame" src="img/shell/shell34.png" alt="29"><img class="frame" src="img/shell/shell35.png" alt="30"><img class="frame" src="img/shell/shell36.png" alt="31"><img class="frame" src="img/shell/shell37.png" alt="32"><img class="frame" src="img/shell/shell38.png" alt="33"><img class="frame" src="img/shell/shell39.png" alt="34"><img class="frame" src="img/shell/shell4.png" alt="35"><img class="frame" src="img/shell/shell40.png" alt="36"><img class="frame" src="img/shell/shell41.png" alt="37"><img class="frame" src="img/shell/shell42.png" alt="38"><img class="frame" src="img/shell/shell43.png" alt="39"><img class="frame" src="img/shell/shell44.png" alt="40"><img class="frame" src="img/shell/shell45.png" alt="41"><img class="frame" src="img/shell/shell46.png" alt="42"><img class="frame" src="img/shell/shell47.png" alt="43"><img class="frame" src="img/shell/shell48.png" alt="44"><img class="frame" src="img/shell/shell49.png" alt="45"><img class="frame" src="img/shell/shell5.png" alt="46"><img class="frame" src="img/shell/shell50.png" alt="47"><img class="frame" src="img/shell/shell51.png" alt="48"><img class="frame" src="img/shell/shell52.png" alt="49"><img class="frame" src="img/shell/shell53.png" alt="50"><img class="frame" src="img/shell/shell54.png" alt="51"><img class="frame" src="img/shell/shell55.png" alt="52"><img class="frame" src="img/shell/shell56.png" alt="53"><img class="frame" src="img/shell/shell57.png" alt="54"><img class="frame" src="img/shell/shell58.png" alt="55"><img class="frame" src="img/shell/shell59.png" alt="56"><img class="frame" src="img/shell/shell6.png" alt="57"><img class="frame" src="img/shell/shell60.png" alt="58"><img class="frame" src="img/shell/shell61.png" alt="59"><img class="frame" src="img/shell/shell62.png" alt="60"><img class="frame" src="img/shell/shell63.png" alt="61"><img class="frame" src="img/shell/shell64.png" alt="62"><img class="frame" src="img/shell/shell7.png" alt="63"><img class="frame" src="img/shell/shell8.png" alt="64"><img class="frame" src="img/shell/shell9.png" alt="65"></div>
+<blockquote class="warning">
+<p>Dica</p>
+<p>Se você quiser, tem um site bem legal que dá pra visualizar linha a linha a execução através desse <a href="https://pythontutor.com/visualize.html#code=//%20Shell%20Sort%20in%20C%20programming%0A//%20fonte%3A%20https%3A//www.programiz.com/dsa/shell-sort%0A%0A%23include%20%3Cstdio.h%3E%0A%0A//%20Shell%20sort%0Avoid%20shellSort%28int%20array%5B%5D,%20int%20n%29%20%7B%0A%20%20//%20Rearrange%20elements%20at%20each%20n/2,%20n/4,%20n/8,%20...%20intervals%0A%20%20for%20%28int%20interval%20%3D%20n%20/%202%3B%20interval%20%3E%200%3B%20interval%20/%3D%202%29%20%7B%0A%20%20%20%20for%20%28int%20i%20%3D%20interval%3B%20i%20%3C%20n%3B%20i%20%2B%3D%201%29%20%7B%0A%20%20%20%20%20%20int%20temp%20%3D%20array%5Bi%5D%3B%0A%20%20%20%20%20%20int%20j%3B%0A%20%20%20%20%20%20for%20%28j%20%3D%20i%3B%20j%20%3E%3D%20interval%20%26%26%20array%5Bj%20-%20interval%5D%20%3E%20temp%3B%20j%20-%3D%20interval%29%20%7B%0A%20%20%20%20%20%20%20%20array%5Bj%5D%20%3D%20array%5Bj%20-%20interval%5D%3B%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20array%5Bj%5D%20%3D%20temp%3B%0A%20%20%20%20%7D%0A%20%20%20%20printf%28%22Final%20loop%20externo%20com%20h%3D%25d%20%3A%20%7B%22,interval%29%3B%0A%20%20%20%20printArray%28array,%20n%29%3B%0A%20%20%20%20printf%28%22%7D%5Cn%22%29%3B%0A%20%20%7D%0A%7D%0A%0A//%20Print%20an%20array%0Avoid%20printArray%28int%20array%5B%5D,%20int%20size%29%20%7B%0A%20%20for%20%28int%20i%20%3D%200%3B%20i%20%3C%20size%3B%20%2B%2Bi%29%20%7B%0A%20%20%20%20printf%28%22%25d%20%20%22,%20array%5Bi%5D%29%3B%0A%20%20%7D%0A%7D%0A%0A//%20Driver%20code%0Aint%20main%28%29%20%7B%0A%20%20int%20data%5B%5D%20%3D%20%7B9,%200,%207,%202,%205,%204,%206,%203,%208,%201%7D%3B%0A%20%20int%20size%20%3D%20sizeof%28data%29%20/%20sizeof%28data%5B0%5D%29%3B%0A%20%20shellSort%28data,%20size%29%3B%0A%20%20printf%28%22Sorted%20array%3A%20%22%29%3B%0A%20%20printArray%28data,%20size%29%3B%0A%7D&amp;cumulative=false&amp;curInstr=0&amp;heapPrimitives=nevernest&amp;mode=display&amp;origin=opt-frontend.js&amp;py=c_gcc9.3.0&amp;rawInputLstJSON=%5B%5D&amp;textReferences=false" target="_blank">link</a></p>
+</blockquote>
+<h2>Estimando a complexidade do shell sort</h2>
+<p>Utilizando a <a href="https://ensino.hashi.pro.br/desprog/aula/7/" target="_blank">receita da Aula 7</a>, será estimada a complexidade do shellsort.</p>
+<p>Considerando que y é a quantidade de iterações do segundo loop e z do loop mais interno.</p>
+<p><strong>1) Quantidade de iterações do primeiro loop interno (x):</strong></p>
+<p>Contador começa de h e aumenta em 1 enquanto for menor que n.</p>
+<p>Depois de x-1 iterações, a condição ainda vale.
+h + 1(x-1) &lt; n
+h + 1x - 1 &lt; n
+x &lt; n - h + 1</p>
+<p>Depois de x iterações, a condição não vale.
+h + 1x &gt;= n
+x &gt;= n - h</p>
+<p>(n-h) &lt;= x &lt; (n-h+1)</p>
+<p><strong>2) Quantidade de iterações do segundo loop interno (y):</strong></p>
+<p>No pior caso, o contador começa de i e diminui em h enquanto for maior igual que h.</p>
+<p>Depois de y-1 iterações, a condição ainda vale.
+i - h(y-1) &gt;= h
+i - hy + h &gt;= h</p>
+<ul>
+<li>hy &gt;= -i</li>
+</ul>
+<p>y &lt;= i/h</p>
+<p><strong>3) Valor de i ao longo do primeiro loop interno:</strong></p>
+<p>i = h, h+1, h+2, …, h + (x-1)</p>
+<p><strong>4) Limitante para as iterações de todas as execuções do segundo loop interno:</strong></p>
+<p>((h / h) + ((h + 1) / h) + ((h + 2) / h) + … + (h + (x-1)) / h)
+= 1 + (h + 1) / h + (h + 2)/ h + … + (h + x + 1) / h</p>
+<p>Soma de PA com:</p>
+<ul>
+<li>primeiro elemento 1;</li>
+<li>último elemento (h + x + 1) / h;</li>
+<li>número de elementos x.</li>
+</ul>
+<p>= ((1 + (h + x + 1) / h) * x) / 2
+= (h + h + x + 1) * x / 2
+= 2hx + x^2 + x/ 2</p>
+<p>Como (n-h) &lt;= x &lt; (n-h+1), podemos concluir que a complexidade é menor que:
+2h(n-h+1) + (n-h+1)^2 + (n-h+1)/ 2
+= (-h^2 - h + n^2 + 3n + 2)/2
+= <strong>O(n^2 - h^2)</strong></p>
+<p>Portanto é a complexidade é <strong>O(n^2)</strong>.</p>
+<h2>Aplicações e recomendacoes do shell sort</h2>
+<p>O melhor caso será quando o vetor já estiver quase ou completamente ordenado, uma vez que serão feitas menos comparações. Analogamente, o pior caso será aquele em que o vetor estiver quase ou completamente desordenado.</p>
+<p>Além disso, este algoritmo é considerado instável, dado que ele não mantém a ordem original dos elementos iguais. Vale ressaltar também quem ele não demanda memória adicional.</p>
+<figure class="table"><table>
+<thead>
+<tr>
+<th style="text-align:center" colspan="2"><strong>recomendacao de tempo na pratica</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">pior caso</td>
+<td style="text-align:center">\[O(n^2))\]</td>
+</tr>
+<tr>
+<td style="text-align:center">melhor caso</td>
+<td style="text-align:center">\[O(n\log (n))\]</td>
+</tr>
+<tr>
+<td style="text-align:center">caso médio</td>
+<td style="text-align:center">\[O(n\log (n))\]</td>
+</tr>
+<tr>
+<td style="text-align:center" colspan="2"><strong>complexidade de memoria adicional</strong></td>
+</tr>
+<tr>
+<td style="text-align:center" colspan="2">O(1)</td>
+</tr>
+<tr>
+<td style="text-align:center" colspan="2"><strong>estabilidade</strong></td>
+</tr>
+<tr>
+<td style="text-align:center" colspan="2">O(1)</td>
+</tr>
+</tbody>
+</table></figure>
+<p>Algumas aplicações reais desse algoritmo são:</p>
+<ul>
+<li><strong>uClib</strong> - mais utilizado em sistemas embarcados</li>
+<li><strong>compressor bzip2</strong> - usado a fim de evitar problemas de exceder a profundidade de recursão</li>
+<li><strong>kernel do Linux</strong> - uma vez que não utiliza chamada em pilha, que pode gerar sobrecarga</li>
+</ul>
+<blockquote class="question">
+<p>Exercício</p>
+<p>Com base no que foi visto até agora, o que você consideraria vantagens desse algoritmo de ordenacao? e desvantagens?</p>
+<details class="answer">
+<summary>Gabarito</summary>
+<p>Vantagens:</p>
+<ul>
+<li>codigo simples</li>
+<li>Não utiliza memória extra</li>
+<li>Interessante ser usado quando os elementos a serem ordenados já estão parcialmente ordenados</li>
+<li>Pode ser otimizado alterando o incremento utilizado</li>
+</ul>
+<p>Desvantagens:</p>
+<ul>
+<li>A complexidade, bem como o tempo de execução irão variar de acordo com o vetor inicial. O shellsort sera mais eficiente naqueles casos em que o vetor ja esta pré ordenado</li>
+</ul>
+</details>
+</blockquote>
+<p>Abaixo é possível observar uma comparação entre outros tipos de ordenação.</p>
+<figure class="img"><img src="img/comparacao.gif" alt=""></figure>
+<h2>Referências</h2>
+<ul>
+<li>https://www.programiz.com/dsa/shell-sort</li>
+<li>https://www.geeksforgeeks.org/shellsort/</li>
+<li>https://pt.wikipedia.org/wiki/Shell_sort</li>
+<li>https://dcm.ffclrp.usp.br/~augusto/teaching/icii/Ordenacao-em-Vetores-Metodos-Avancados-Apresentacao.pdf</li>
+<li>https://www.educative.io/edpresso/what-is-a-shell-sort</li>
+<li>https://www.codingeek.com/algorithms/shell-sort-algorithm-explanation-implementation-and-complexity/</li>
+</ul>
+
+
+            </main>
+            <footer>
+                <a href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">
+                    <img alt="CC BY-SA 4.0" src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png" title="Creative Commons Attribution-ShareAlike 4.0 International License"/>
+                </a>
+                © 2021 Marcelo Hashimoto
+            </footer>
+        </div>
+    </body>
+</html>
