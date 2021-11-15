@@ -4,7 +4,7 @@ Shell Sort - algoritimo de ordenação
 Shell Sort e Insertion Sort 
 ---------
 
-O shell sort trata-se de um refinamento do método de inserção que vimos em aula. Se você não se lembra muito bem como funciona o método de inserção, vale a pena fazer uma pequena revisão:
+O shell sort tem uma ideia muito similar ao insertion sort. Na verdade, podemos dizer que se trata de um refinamento do método de inserção. Se você não se lembra muito bem como funciona o método de inserção, vale a pena fazer uma pequena revisão:
 
 ::: Revisão: Insertion sort
 A ideia do insertion sort é bem similar a como ordenamos cartas de baralho. Um índice percorre todo o vetor e aloca os elementos em dois grupos: dos ordenados e dos não-ordenados. 
@@ -16,10 +16,10 @@ Note que no insertion sort cada elemento é comparado com o elemento **consecuti
 ![](insertion-sort1.png)
 :::
 
-Com o Insertion Sort fresco em mente, faça o seguinte exercício:
+
 
 ??? Exercicio
-Com base no vetor abaixo, pense em algumas desvantagens em utilizar o insertion sort.
+Com o Insertion Sort fresco em mente, pense em algumas desvantagens em utilizar esse método de ordenação,  a partir do vetor abaixo.
 
 ![](vetor-desordenado.png)
 
@@ -28,7 +28,7 @@ Imagine o custo de levar o número 9 (maior número do vetor) para a última pos
 :::
 ???
 
-Tentando mitigar essa desvantagem no uso do Insertion Sort que o **Shell Sort** foi pensado. Sua ideia é primeiro ordenar os elementos mais distantes uns dos outros e ir diminuindo o intervalo até que ele seja 1, e o algoritimo seja igual ao Insertion Sort, finalizando a ordenação. Vale ressaltar que os intervalos são diminuídos a partir da sequência usada, que é definida pelo usuário com base em suas necessidades.
+Foi tentando mitigar essa desvantagem no uso do Insertion Sort que o **Shell Sort** foi pensado. Sua ideia é primeiro ordenar os elementos mais distantes uns dos outros e ir diminuindo o intervalo até que ele seja 1, finalizando a ordenação. Vale ressaltar que os intervalos são diminuídos a partir da sequência usada, que é definida pelo usuário com base em suas necessidades.
 
 ??? Exercicio
 Tente analisar em que situação o shell sort será igual ao insertion sort.
@@ -66,9 +66,14 @@ Abaixo tem uma lista das possíveis sequências utilizadas nesse algoritmo:
 O uso dessas diferentes intervalos infuenciará na complexidade final do algorítimo.
 !!!
 
-A base do desenvolvimento do Shell Sort se dá da seguinte maneira: em um vetor de n elementos determina-se um intervalo *h* que inicialmente começa em n/2. Esse intervalo é utilizado para comparar dois valores do vetor (ex: v[0] com v[h], v[1] com v[h+1] ... v[h-1] com v[h + n/2 -1]). Nessa comparação, se o elemento de menor índice do vetor, for maior que o elemento de maior índice, **inverte-se as posições**. 
+A base do desenvolvimento do Shell Sort se dá da seguinte maneira: em um vetor de n elementos determina-se um intervalo *h* que inicialmente começa em n/2. Esse intervalo é utilizado para comparar dois valores do vetor separados por um intervalo de distância. Essa ideia pode ser observada no exemplo abaixo, na qual o primeiro elemento é comparado com o 5 elemento, o segundo é comparado ao 6, e por assim em diante, até chegar ao final do vetor.
 
-Após percorrido todo o vetor, divide-se o *h* em 2, e assim, as comparações serão em intervalos cada vez menores, até que o *h* seja 1, e a comparação de cada elemento do vetor, seja em relação com o elemento seguinte. 
+![](comparacoes.png)
+
+
+Nessa comparação, se o elemento de menor índice do vetor, for maior que o elemento de maior índice, **invertem-se as posições**. É desta forma que é possível ordenar os elementos distantes um do outro de forma mais rápida do que a do insertion sort.
+
+Assim após percorrido todo o vetor, divide-se o *h* em 2, e assim, as comparações serão em intervalos cada vez menores, até que o *h* seja 1, e a comparação de cada elemento do vetor, seja em relação com o elemento seguinte. 
 
 Em outras palavras, a ideia geral é a seguinte:
 
@@ -140,7 +145,7 @@ para cada intervalo maior que 0:
 ```
 
 
-??? Exercício
+??? DESAFIO
 
 Implemente o shell sort em C. Suponha que os elementos são inteiros.
 
