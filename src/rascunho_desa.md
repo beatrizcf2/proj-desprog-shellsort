@@ -20,7 +20,7 @@ O shell sort trata-se de um refinamento do método de inserção, mencionado ant
 Sua ideia é primeiro ordenar os elementos mais distantes uns dos outros e ir diminuindo o intervalo até que todos os elementos estejam adequadamente ordenados, que é uma das limitações do insertion sort. Como os intervalos são diminuídos a partir da sequência usada, isso irá influenciar diretamente na complexidade do algoritmo.
 
 !!! OBS
- Neste handout vamos implementar a sequência original do shell sort, a qual o intervalo é dividido por dois a cada iteração. Lembre-se que a escolha da sequência irá variar de acordo com as necessidades de aplicação desse
+ Neste handout vamos implementar a sequência original do shell sort, a qual o intervalo é dividido por dois a cada iteração. Lembre-se que a escolha da sequência irá variar de acordo com as necessidades de aplicação desse algoritmo.
 !!!
 
 Abaixo tem uma lista das possíveis sequências utilizadas nesse algoritmo:
