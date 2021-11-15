@@ -1,14 +1,60 @@
 Shell Sort - algoritimo de ordenação
 ======
 
+Shell Sort e Insertion Sort 
+---------
+
+O shell sort trata-se de um refinamento do método de inserção que vimos em aula. Se você não se lembra muito bem como funciona o método de inserção, vale a pena fazer uma pequena revisão:
+
+::: Revisão: Insertion sort
+A ideia do insertion sort é bem similar a como ordenamos cartas de baralho. Um índice percorre todo o vetor e aloca os elementos em dois grupos: dos ordenados e dos não-ordenados. 
+
+Primeiramente, assumimos que o primeiro elemento já está ordenado, e todo os outros elementos fazem parte do grupo dos não ordenados. E então, para cada elemento do grupo dos não-ordenados iremos retirá-lo e compará-lo com cada elemento do grupo dos elementos ordenados, ata que se encontre um elemento maior do que ele, podendo assim, inserí-lo no grupo dos elementos ordenados de modo a manter a ordem.
+
+Note que no insertion sort cada elemento é comparado com o elemento **consecutivo** a ele.
+
+![](insertion-sort1.png)
+:::
+
+Com o Insertion Sort fresco em mente, faça o seguinte exercício:
+
+??? Exercicio
+Com base no vetor abaixo, pense em algumas desvantagens em utilizar o insertion sort.
+
+![](vetor-desordenado.png)
+
+::: Desvantagens
+Imagine o custo de levar o número 9 (maior número do vetor) para a última posição, ou de levar o número 1 (segundo menor número de vetor) para a segunda posição, por meio do uso do Insertion Sort, movendo os elementos apenas uma posição à frente. Em caso como esses, é mais interessante, por exemplo, comparar o número 9 com um elemento bem mais a frente do que seu vizinho, e desta forma, ele estará cada vez mais próximo de ficar na sua posição final. 
+:::
+???
+
+Tentando mitigar essa desvantagem no uso do Insertion Sort que o **Shell Sort** foi pensado. Sua ideia é primeiro ordenar os elementos mais distantes uns dos outros e ir diminuindo o intervalo até que ele seja 1, e o algoritimo seja igual ao Insertion Sort, finalizando a ordenação. Vale ressaltar que os intervalos são diminuídos a partir da sequência usada, que é definida pelo usuário com base em suas necessidades.
+
+??? Exercicio
+Tente analisar em que situação o shell sort será igual ao insertion sort.
+
+***Dica:*** *está relacionado ao valor do intervalo.*
+::: Gabarito
+ A partir do momento em que o intervalo é igual a 1, iremos comparar e mover elementos vizinhos um do outro, como acontece no caso do insertion sort.
+:::
+???
+
+??? Exercicio
+Com essas diferenças em mente, pense em um comparativo entre esses dois algoritimos de ordenação:
+
+::: Insertion Sort X Shell Sort
+
+* Na ordenação pelo Insertion Sort, movemos os elementos apenas uma posição à frente. Esse fator em muitos momentos pode ser uma desvantagem, especialmente quando um elemento precisa ser movido muito à frente, e assim, muitos movimentos serão mais precisos. A ideia do Shell Sort é permitir a troca de itens distantes, possibilitando uma organização mais rápida. 
+
+* O Shell Sort organiza os elementos analisando sublistas separadas por um intervalo que o usuário escolhe o padrão, até que ele seja 1 (quando o algoritimo passa a ser um Insertion Sort). Escolhendo bem esse padrão, fazendo um estudo e adequando para a sua respectiva necessidade, é possível fazer com que o algoritmo seja muito mais rápido e eficiente. 
+:::
+???
+
 Primeira ideia
 ---------
 
-O shell sort trata-se de um refinamento do método de inserção que vimos em aula. Sua ideia é primeiro ordenar os elementos mais distantes uns dos outros e ir diminuindo o intervalo até que todos os elementos estejam adequadamente ordenados, que era uma das limitações do insertion sort. Os intervalos são diminuídos a partir da sequência usada, que irá influenciar diretamente na complexidade do algoritmo. 
-
 !!! OBS
- Neste handout vamos implementar a sequência original do shell sort, a qual o intervalo é dividido por dois a cada iteração. Lembre-se que a escolha da sequência irá variar de acordo com as necessidades de aplicação desse algoritmo.
-!!!
+ Neste handout, por simplicidade, vamos implementar a sequência original do shell sort, a qual o intervalo é dividido por dois a cada iteração. Lembre-se que a escolha da sequência irá variar de acordo com as necessidades de aplicação desse algoritmo.
 
 Abaixo tem uma lista das possíveis sequências utilizadas nesse algoritmo:
 
@@ -17,12 +63,12 @@ Abaixo tem uma lista das possíveis sequências utilizadas nesse algoritmo:
 * Papernov & Stasevich’s - 1, 3, 5, 9, 17, 33 ... 2x+1
 * Knuth’s - 1, 4, 13,... (3k – 1) / 2
 
-A base do seu desenvolvimento se dá da seguinte maneira: em um vetor de n elementos determina-se um intervalo *h* que inicialmente começa em n/2. Esse intervalo é utilizado para comparar dois valores do vetor (ex: v[0] com v[h], v[1] com v[h+1] ... v[h-1] com v[h + n/2 -1]). Essa comparação deve ser feita 
-Nessa comparação, se o elemento de menor índice do vetor, for maior que o elemento de maior índice, inverte-se as posições. 
+O uso dessas diferentes intervalos infuenciará na complexidade final do algorítimo.
+!!!
 
+A base do desenvolvimento do Shell Sort se dá da seguinte maneira: em um vetor de n elementos determina-se um intervalo *h* que inicialmente começa em n/2. Esse intervalo é utilizado para comparar dois valores do vetor (ex: v[0] com v[h], v[1] com v[h+1] ... v[h-1] com v[h + n/2 -1]). Nessa comparação, se o elemento de menor índice do vetor, for maior que o elemento de maior índice, **inverte-se as posições**. 
 
 Após percorrido todo o vetor, divide-se o *h* em 2, e assim, as comparações serão em intervalos cada vez menores, até que o *h* seja 1, e a comparação de cada elemento do vetor, seja em relação com o elemento seguinte. 
-
 
 Em outras palavras, a ideia geral é a seguinte:
 
@@ -33,29 +79,6 @@ para cada intervalo maior que 0:
         ordene os elementos separados pelo intervalo
     intervalo/=2
 ```
-
-Mas você não falou que ele é um refinamento do método de inserção? Cadê o insertion sort nessa ideia? 
-
-Se você não se lembra muito bem como funciona o método de inserção, vale a pena fazer uma pequena revisão.
-
-::: Revisão: Insertion sort
-A ideia do insertion sort é bem similar a como ordenamos cartas de baralho. Um índice percorre todo o vetor e aloca os elementos em dois grupos: dos ordenados e dos não-ordenados. 
-
-Primeiramente, assumimos que o primeiro elemento já está ordenado, e todo os outros elementos fazem parte do grupo dos não ordenados. E então, para cada elemento do grupo dos não-ordenados iremos retirá-lo e compará-lo com cada elemento do grupo dos elementos ordenados, ata que se encontre um elemento maior do que ele, podendo assim, inseri-lo no grupo dos elementos ordenados de modo a manter a ordem.
-
-Note que no insertion sort cada elemento é comparado com o elemento **consecutivo** a ele.
-
-![](insertion-sort1.png)
-:::
-
-??? Exercicio
-Tente analisar em que situação o shell sort será igual ao insertion sort.
-
-***Dica:*** *está relacionado ao valor do intervalo.*
-::: Gabarito
- A partir do momento em que o intervalo é igual a 1, iremos comparar e mover elementos vizinhos um do outro, como acontece no caso do insertion sort.
-:::
-???
 
 Como mencionado, a ideia é que o vetor seja percorrido a cada iteração, e a cada iteração o valor do intervalo h seja diminuído, de acordo com a sequência escolhida, neste caso, dividido por 2 e arredondado para cima no caso em que a divisão não é inteira.
 
@@ -257,14 +280,6 @@ Desvantagens:
 Abaixo é possível observar uma comparação entre outros tipos de ordenação.
 
 ![](comparacao.gif)
-
-Shell Sort X Insertion Sort
---------- 
-Na ordenação pelo Insertion Sort, movemos os elementos apenas uma posição à frente. Esse fator em muitos momentos pode ser uma desvantagem, especialmente quando um elemento precisa ser movido muito à frente, e assim, muitos movimentos serão precisos. A ideia do Shell Sort é permitir a troca de itens distantes, possibilitando uma organização mais rápida. 
-
-Vale ressaltar que o Shell Sort organiza os elementos analisando sublistas separadas por um intervalo que o usuário escolhe o padrão, até que ele seja 1 (quando o algoritimo passa a ser um Insertion Sort). Escolhendo bem esse padrão, fazendo um estudo e adequando para a sua respectiva necessidade, é possível fazer com que o algoritmo seja muito mais rápido e eficiente. 
-
-Em vetores pequenos, em que mover elementos apenas uma posição à frente não é uma desvantagem, em algumas situações é mais vantajoso utilizar o Insertion Sort, entretanto, essas aplicações são menos comuns.  
 
 
 Referências  
