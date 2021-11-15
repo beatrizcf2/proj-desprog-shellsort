@@ -238,7 +238,7 @@ Algumas aplicações reais desse algoritmo são:
 
 ??? Exercício
 
-Com base no que foi visto até agora, o que você consideraria vantagens desse algoritmo de ordenacao? e desvantagens?
+Com base no que foi visto até agora, o que você consideraria vantagens desse algoritmo de ordenação? E desvantagens?
 
 ::: Gabarito
 Vantagens:
@@ -248,7 +248,7 @@ Vantagens:
 * Pode ser otimizado alterando o incremento utilizado
 
 Desvantagens:
-* A complexidade, bem como o tempo de execução irão variar de acordo com o vetor inicial. O shellsort sera mais eficiente naqueles casos em que o vetor ja esta pré ordenado 
+* A complexidade, bem como o tempo de execução irão variar de acordo com o vetor inicial. O shellsort será mais eficiente naqueles casos em que o vetor ja esta pré ordenado 
 
 :::
 
@@ -258,6 +258,13 @@ Abaixo é possível observar uma comparação entre outros tipos de ordenação.
 
 ![](comparacao.gif)
 
+Shell Sort X Insertion Sort
+--------- 
+Na ordenação pelo Insertion Sort, movemos os elementos apenas uma posição à frente. Esse fator em muitos momentos pode ser uma desvantagem, especialmente quando um elemento precisa ser movido muito à frente, e assim, muitos movimentos serão precisos. A ideia do Shell Sort é permitir a troca de itens distantes, possibilitando uma organização mais rápida. 
+
+Vale ressaltar que o Shell Sort organiza os elementos analisando sublistas separadas por um intervalo que o usuário escolhe o padrão, até que ele seja 1 (quando o algoritimo passa a ser um Insertion Sort). Escolhendo bem esse padrão, fazendo um estudo e adequando para a sua respectiva necessidade, é possível fazer com que o algoritmo seja muito mais rápido e eficiente. 
+
+Em vetores pequenos, em que mover elementos apenas uma posição à frente não é uma desvantagem, em algumas situações é mais vantajoso utilizar o Insertion Sort, entretanto, essas aplicações são menos comuns.  
 
 
 Referências  
