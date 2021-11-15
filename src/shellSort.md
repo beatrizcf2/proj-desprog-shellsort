@@ -174,10 +174,12 @@ void shellSort(int v[], int n) {
 Se você quiser, tem um site bem legal que dá pra visualizar linha a linha a execução através desse [link](https://pythontutor.com/visualize.html#code=//%20Shell%20Sort%20in%20C%20programming%0A//%20fonte%3A%20https%3A//www.programiz.com/dsa/shell-sort%0A%0A%23include%20%3Cstdio.h%3E%0A%0A//%20Shell%20sort%0Avoid%20shellSort%28int%20array%5B%5D,%20int%20n%29%20%7B%0A%20%20//%20Rearrange%20elements%20at%20each%20n/2,%20n/4,%20n/8,%20...%20intervals%0A%20%20for%20%28int%20interval%20%3D%20n%20/%202%3B%20interval%20%3E%200%3B%20interval%20/%3D%202%29%20%7B%0A%20%20%20%20for%20%28int%20i%20%3D%20interval%3B%20i%20%3C%20n%3B%20i%20%2B%3D%201%29%20%7B%0A%20%20%20%20%20%20int%20temp%20%3D%20array%5Bi%5D%3B%0A%20%20%20%20%20%20int%20j%3B%0A%20%20%20%20%20%20for%20%28j%20%3D%20i%3B%20j%20%3E%3D%20interval%20%26%26%20array%5Bj%20-%20interval%5D%20%3E%20temp%3B%20j%20-%3D%20interval%29%20%7B%0A%20%20%20%20%20%20%20%20array%5Bj%5D%20%3D%20array%5Bj%20-%20interval%5D%3B%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20array%5Bj%5D%20%3D%20temp%3B%0A%20%20%20%20%7D%0A%20%20%20%20printf%28%22Final%20loop%20externo%20com%20h%3D%25d%20%3A%20%7B%22,interval%29%3B%0A%20%20%20%20printArray%28array,%20n%29%3B%0A%20%20%20%20printf%28%22%7D%5Cn%22%29%3B%0A%20%20%7D%0A%7D%0A%0A//%20Print%20an%20array%0Avoid%20printArray%28int%20array%5B%5D,%20int%20size%29%20%7B%0A%20%20for%20%28int%20i%20%3D%200%3B%20i%20%3C%20size%3B%20%2B%2Bi%29%20%7B%0A%20%20%20%20printf%28%22%25d%20%20%22,%20array%5Bi%5D%29%3B%0A%20%20%7D%0A%7D%0A%0A//%20Driver%20code%0Aint%20main%28%29%20%7B%0A%20%20int%20data%5B%5D%20%3D%20%7B9,%200,%207,%202,%205,%204,%206,%203,%208,%201%7D%3B%0A%20%20int%20size%20%3D%20sizeof%28data%29%20/%20sizeof%28data%5B0%5D%29%3B%0A%20%20shellSort%28data,%20size%29%3B%0A%20%20printf%28%22Sorted%20array%3A%20%22%29%3B%0A%20%20printArray%28data,%20size%29%3B%0A%7D&cumulative=false&curInstr=0&heapPrimitives=nevernest&mode=display&origin=opt-frontend.js&py=c_gcc9.3.0&rawInputLstJSON=%5B%5D&textReferences=false)
 !!!
 
-Estimando a complexidade do shell sort
---------- 
+!!! Complexidade
 
-Utilizando a [receita da Aula 7](https://ensino.hashi.pro.br/desprog/aula/7/), será estimada a complexidade do shellsort.
+Use a receita da [Aula 7](https://ensino.hashi.pro.br/desprog/aula/7/) para estimar a complexidade do shellsort.
+
+::: Gabarito
+``` c
 
 
 Considerando que y é a quantidade de iterações do segundo loop e z do loop mais interno.
