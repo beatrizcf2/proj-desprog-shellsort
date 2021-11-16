@@ -191,7 +191,8 @@ Complexidade
 
 Use a receita da [Aula 7](https://ensino.hashi.pro.br/desprog/aula/7/) para estimar a complexidade do shellsort.
 
-Usando a mesma receita dos checkpoints anteriores, estime a quantidade de iterações do loop externo. **Apenas** o loop externo. Ignore a existência do loop interno por enquanto.
+???
+Estime a quantidade de iterações do loop externo. **Apenas** o loop externo. Ignore a existência do loop interno por enquanto.
 
 ::: Gabarito
 ``` txt
@@ -215,11 +216,13 @@ x >= n - h
 
 ```
 :::
+???
+
+???
 
 Usando a mesma receita dos checkpoints anteriores, estime a quantidade de iterações de uma execução do loop interno. Atenção aos pontos abaixo!
 
 * É apenas uma execução, ou seja, ignore a existência do loop externo por enquanto.
-
 * Note que o cálculo deve ser em função de i, não n.
 
 ::: Gabarito
@@ -239,6 +242,10 @@ y <= i/h
 ```
 :::
 
+???
+
+???
+
 Qual é o valor de i na primeira iteração do loop externo? E na segunda iteração desse loop? E na terceira iteração? E na quarta? E…
 
 ::: Gabarito
@@ -254,6 +261,9 @@ Note que termina em x-1, pois começa em 0. A quantidade de valores é x, mas is
 
 ```
 :::
+???
+
+???
 
 Usando os dois checkpoints anteriores, estime o total de iterações do loop interno.
 
@@ -267,6 +277,9 @@ Usando os dois checkpoints anteriores, estime o total de iterações do loop int
 
 ```
 :::
+???
+
+???
 
 Aplicando os seus conhecimentos de Progressão Aritmética (utilizados em outras aulas), encontre a complexidade desse algoritmo de ordenação.
 
@@ -293,6 +306,7 @@ Portanto é a complexidade é **O(n^2)**.
 
 ```
 :::
+???
 
 Aplicações e recomendações do shell sort 
 --------- 
