@@ -53,6 +53,8 @@ Com essas diferenças em mente, pense em um comparativo entre esses dois algorit
 Primeira ideia
 ---------
 
+A base do desenvolvimento do Shell Sort se dá da seguinte maneira: em um vetor de n elementos determina-se um intervalo *h* que inicialmente começa em n/2. Esse intervalo é utilizado para comparar dois valores do vetor separados por um intervalo de distância. 
+
 !!! OBS
  Neste handout, por simplicidade, vamos implementar a sequência original do shell sort, a qual o intervalo é dividido por dois a cada iteração. Lembre-se que a escolha da sequência irá variar de acordo com as necessidades de aplicação desse algoritmo.
 
@@ -66,10 +68,9 @@ Abaixo tem uma lista das possíveis sequências utilizadas nesse algoritmo:
 O uso dessas diferentes intervalos infuenciará na complexidade final do algorítimo.
 !!!
 
-A base do desenvolvimento do Shell Sort se dá da seguinte maneira: em um vetor de n elementos determina-se um intervalo *h* que inicialmente começa em n/2. Esse intervalo é utilizado para comparar dois valores do vetor separados por um intervalo de distância. Essa ideia pode ser observada no exemplo abaixo, na qual o primeiro elemento é comparado com o 5 elemento, o segundo é comparado ao 6, e por assim em diante, até chegar ao final do vetor.
+Essa ideia pode ser observada no exemplo abaixo, na qual o primeiro elemento é comparado com o 5 elemento, o segundo é comparado ao 6, e por assim em diante, até chegar ao final do vetor.
 
 ![](comparacoes.png)
-
 
 Nessa comparação, se o elemento de menor índice do vetor, for maior que o elemento de maior índice, **invertem-se as posições**. É desta forma que é possível ordenar os elementos distantes um do outro de forma mais rápida do que a do insertion sort.
 
@@ -90,21 +91,18 @@ Como mencionado, a ideia é que o vetor seja percorrido a cada iteração, e a c
 
 ![](shell-sort1.png)
 
-
-Para percorrer o vetor a cada iteração, iremos inicialmente comparar os elementos v[i-h] e v[i], de forma a percorrer o vetor até que i seja igual a n-1.  Desta maneira, se v[i-h] for maior do que v[i], inverte-se a posição desses elementos. Para isso, é necessário armazenar v[i] em uma variável temporária, e se essa condição for satisfeita, copiar v[i-h] para v[i] e colocar a variável temporária em v[i - h] para que a troca seja feita.
+Para percorrer o vetor a cada iteração, a ideia é que i comece em n/2 e j comece valendo 0. Desta maneira, se v[j] for maior do que v[i], inverte-se a posição desses elementos. Assim iremos incrementando o valor de i e j, comparando os elementos dessas posicoes até que se tenha chegado ao final do vetor e i seja igual a n-1.
 
 ``` txt
 intervalo = n/2
 para cada intervalo maior que 0:
     i = intervalo
-    j = i-h
+    j = i-intervalo
     para cada intervalo em v enquanto i<n:
-        temp = v[i]
         se v[j]>v[i]:
-            v[i] = v[j]
-        v[j] = temp 
+            troca v[i] e v[j]
         i+=1
-        j=i-h
+        j=i-intervalo
     intervalo/=2
 ```
 
@@ -124,9 +122,24 @@ fim da iteracao 2: v = {1 3 5 8}
 ``` 
 :::
 
-???
+Note que para realizar a troca, é necessário armazenar v[i] em uma variável temporária, assim como fizemos para o insertion sort, e se essa condição for satisfeita, copiar v[j] para v[i] e colocar a variável temporária em v[j] para que a troca seja feita.
 
-Na verdade, está faltando algo - precisamos comparar TODOS os elementos distantes h um do outro a esquerda de i. Além disso observe que precisamos considerar apenas intervalos positivos, uma vez que a linguagem c não admite índices negativos.
+``` txt
+intervalo = n/2
+para cada intervalo maior que 0:
+    i = intervalo
+    j = i-intervalo
+    para cada intervalo em v enquanto i<n:
+        temp = v[i]
+        se v[j]>v[i]:
+            v[i] = v[j]
+        v[j] = temp 
+        i+=1
+        j=i-intervalo
+    intervalo/=2
+```
+
+Na verdade, está faltando algo - precisamos comparar TODOS os elementos distantes h um do outro a esquerda de i. Além disso observe que precisamos considerar apenas intervalos positivos, uma vez que utilizar índices negativos não faz sentido para essa implementação.
 
 ``` txt
 intervalo = n/2
@@ -143,7 +156,6 @@ para cada intervalo maior que 0:
         
     intervalo/=2
 ```
-
 
 ??? DESAFIO
 
@@ -174,14 +186,13 @@ void shellSort(int v[], int n) {
 Se você quiser, tem um site bem legal que dá pra visualizar linha a linha a execução através desse [link](https://pythontutor.com/visualize.html#code=//%20Shell%20Sort%20in%20C%20programming%0A//%20fonte%3A%20https%3A//www.programiz.com/dsa/shell-sort%0A%0A%23include%20%3Cstdio.h%3E%0A%0A//%20Shell%20sort%0Avoid%20shellSort%28int%20array%5B%5D,%20int%20n%29%20%7B%0A%20%20//%20Rearrange%20elements%20at%20each%20n/2,%20n/4,%20n/8,%20...%20intervals%0A%20%20for%20%28int%20interval%20%3D%20n%20/%202%3B%20interval%20%3E%200%3B%20interval%20/%3D%202%29%20%7B%0A%20%20%20%20for%20%28int%20i%20%3D%20interval%3B%20i%20%3C%20n%3B%20i%20%2B%3D%201%29%20%7B%0A%20%20%20%20%20%20int%20temp%20%3D%20array%5Bi%5D%3B%0A%20%20%20%20%20%20int%20j%3B%0A%20%20%20%20%20%20for%20%28j%20%3D%20i%3B%20j%20%3E%3D%20interval%20%26%26%20array%5Bj%20-%20interval%5D%20%3E%20temp%3B%20j%20-%3D%20interval%29%20%7B%0A%20%20%20%20%20%20%20%20array%5Bj%5D%20%3D%20array%5Bj%20-%20interval%5D%3B%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20array%5Bj%5D%20%3D%20temp%3B%0A%20%20%20%20%7D%0A%20%20%20%20printf%28%22Final%20loop%20externo%20com%20h%3D%25d%20%3A%20%7B%22,interval%29%3B%0A%20%20%20%20printArray%28array,%20n%29%3B%0A%20%20%20%20printf%28%22%7D%5Cn%22%29%3B%0A%20%20%7D%0A%7D%0A%0A//%20Print%20an%20array%0Avoid%20printArray%28int%20array%5B%5D,%20int%20size%29%20%7B%0A%20%20for%20%28int%20i%20%3D%200%3B%20i%20%3C%20size%3B%20%2B%2Bi%29%20%7B%0A%20%20%20%20printf%28%22%25d%20%20%22,%20array%5Bi%5D%29%3B%0A%20%20%7D%0A%7D%0A%0A//%20Driver%20code%0Aint%20main%28%29%20%7B%0A%20%20int%20data%5B%5D%20%3D%20%7B9,%200,%207,%202,%205,%204,%206,%203,%208,%201%7D%3B%0A%20%20int%20size%20%3D%20sizeof%28data%29%20/%20sizeof%28data%5B0%5D%29%3B%0A%20%20shellSort%28data,%20size%29%3B%0A%20%20printf%28%22Sorted%20array%3A%20%22%29%3B%0A%20%20printArray%28data,%20size%29%3B%0A%7D&cumulative=false&curInstr=0&heapPrimitives=nevernest&mode=display&origin=opt-frontend.js&py=c_gcc9.3.0&rawInputLstJSON=%5B%5D&textReferences=false)
 !!!
 
-!!! Complexidade
+Complexidade
+---------
 
 Use a receita da [Aula 7](https://ensino.hashi.pro.br/desprog/aula/7/) para estimar a complexidade do shellsort.
 
 ::: Gabarito
-``` c
-
-
+``` txt
 Considerando que y é a quantidade de iterações do segundo loop e z do loop mais interno.
 
 
@@ -241,8 +252,10 @@ Como (n-h) <= x < (n-h+1), podemos concluir que a complexidade é menor que:
 = **O(n^2 - h^2)**
 
 Portanto é a complexidade é **O(n^2)**.
+```
+:::
 
-Aplicações e recomendacoes do shell sort 
+Aplicações e recomendações do shell sort 
 --------- 
 O melhor caso será quando o vetor já estiver quase ou completamente ordenado, uma vez que serão feitas menos comparações. Analogamente, o pior caso será aquele em que o vetor estiver quase ou completamente desordenado.
 
@@ -255,9 +268,9 @@ Além disso, este algoritmo é considerado instável, dado que ele não mantém 
 | melhor caso           |       $$O(n\log (n))$$           |
 | caso médio            |       $$O(n\log (n))$$           |
 |           **complexidade de memoria adicional**         ||
-|                           O(1)                          ||
+|                          $$O(1)$$                       ||
 |                     **estabilidade**                    ||
-|                           O(1)                          ||
+|                          $$ O(1)$$                      ||
 
 Algumas aplicações reais desse algoritmo são:
 * **uClib** - mais utilizado em sistemas embarcados
