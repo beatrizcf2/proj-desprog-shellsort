@@ -191,6 +191,8 @@ Complexidade
 
 Use a receita da [Aula 7](https://ensino.hashi.pro.br/desprog/aula/7/) para estimar a complexidade do shellsort.
 
+Usando a mesma receita dos checkpoints anteriores, estime a quantidade de iterações do loop externo. **Apenas** o loop externo. Ignore a existência do loop interno por enquanto.
+
 ::: Gabarito
 ``` txt
 Considerando que y é a quantidade de iterações do segundo loop e z do loop mais interno.
@@ -211,7 +213,17 @@ x >= n - h
 
 (n-h) <= x < (n-h+1)
 
+```
+:::
 
+Usando a mesma receita dos checkpoints anteriores, estime a quantidade de iterações de uma execução do loop interno. Atenção aos pontos abaixo!
+
+* É apenas uma execução, ou seja, ignore a existência do loop externo por enquanto.
+
+* Note que o cálculo deve ser em função de i, não n.
+
+::: Gabarito
+``` txt
 
 **2) Quantidade de iterações do segundo loop interno (y):**
 
@@ -224,18 +236,44 @@ i - hy + h >= h
 
 y <= i/h
 
+```
+:::
 
+Qual é o valor de i na primeira iteração do loop externo? E na segunda iteração desse loop? E na terceira iteração? E na quarta? E…
+
+::: Gabarito
+``` txt
 
 **3) Valor de i ao longo do primeiro loop interno:**
 
 i = h, h+1, h+2, ..., h + (x-1)
 
+!!! Atenção
+Note que termina em x-1, pois começa em 0. A quantidade de valores é x, mas isso não significa que o último valor é necessariamente x.
+!!!
 
+```
+:::
+
+Usando os dois checkpoints anteriores, estime o total de iterações do loop interno.
+
+::: Gabarito
+``` txt
 
 **4) Limitante para as iterações de todas as execuções do segundo loop interno:**
 
 ((h / h) + ((h + 1) / h) + ((h + 2) / h) + ... + (h + (x-1)) / h)
 = 1 + (h + 1) / h + (h + 2)/ h + ... + (h + x + 1) / h
+
+```
+:::
+
+Aplicando os seus conhecimentos de Progressão Aritmética (utilizados em outras aulas), encontre a complexidade desse algoritmo de ordenação.
+
+[Clique aqui](https://ensino.hashi.pro.br/desprog/resumo/complexidade/cola.html) para ver a revisão de PAs, PGs e dos conceitos de complexidade.
+
+::: Gabarito
+``` txt
 
 Soma de PA com:
 - primeiro elemento 1;
@@ -252,6 +290,7 @@ Como (n-h) <= x < (n-h+1), podemos concluir que a complexidade é menor que:
 = **O(n^2 - h^2)**
 
 Portanto é a complexidade é **O(n^2)**.
+
 ```
 :::
 
