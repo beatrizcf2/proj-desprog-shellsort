@@ -121,6 +121,7 @@ fim da iteracao 2: v = {1 3 5 8}
                    h = 1
 ``` 
 :::
+???
 
 Note que para realizar a troca, é necessário armazenar v[i] em uma variável temporária, assim como fizemos para o insertion sort, e se essa condição for satisfeita, copiar v[j] para v[i] e colocar a variável temporária em v[j] para que a troca seja feita.
 
@@ -191,7 +192,7 @@ Complexidade
 
 Use a receita da [Aula 7](https://ensino.hashi.pro.br/desprog/aula/7/) para estimar a complexidade do shellsort.
 
-???
+??? Exercício
 Estime a quantidade de iterações do loop externo. **Apenas** o loop externo. Ignore a existência do loop interno por enquanto.
 
 ::: Gabarito
@@ -218,7 +219,7 @@ x >= n - h
 :::
 ???
 
-???
+??? Exercício
 
 Usando a mesma receita dos checkpoints anteriores, estime a quantidade de iterações de uma execução do loop interno. Atenção aos pontos abaixo!
 
@@ -244,7 +245,7 @@ y <= i/h
 
 ???
 
-???
+??? Exercício
 
 Qual é o valor de i na primeira iteração do loop externo? E na segunda iteração desse loop? E na terceira iteração? E na quarta? E…
 
@@ -263,7 +264,7 @@ Note que termina em x-1, pois começa em 0. A quantidade de valores é x, mas is
 :::
 ???
 
-???
+??? Exercício
 
 Usando os dois checkpoints anteriores, estime o total de iterações do loop interno.
 
@@ -279,7 +280,7 @@ Usando os dois checkpoints anteriores, estime o total de iterações do loop int
 :::
 ???
 
-???
+??? Exercício
 
 Aplicando os seus conhecimentos de Progressão Aritmética (utilizados em outras aulas), encontre a complexidade desse algoritmo de ordenação.
 
