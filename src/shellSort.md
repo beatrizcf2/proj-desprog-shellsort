@@ -1,6 +1,9 @@
 Shell Sort - algoritimo de ordenação
 ======
 
+Imagine que um hospital precise organizar as pessoas em seu sistema, de modo que elas fiquem em ordem de chegada, a fim de identificar os pacientes que necessitam de mais cuidados médicos (partindo do princípio que, quanto mais tempo no hospital, mais grave é a situação), ou que uma escola decidiu fazer uma premiação para os alunos com melhores rendimentos, e fazer um plano de ação para os alunos com piores rendimentos. Para esses, e outras infinitas possibilidaades, é necessário utilizar um algorítimo de ordenação. Esse Handout irá explicar todos os detalhes de um dos inúmeros algoritimo de ordenação existentes, o Shell Sort, uma melhoria do métodos que estudamos na aula 8. 
+
+
 Shell Sort e Insertion Sort 
 ---------
 
@@ -9,9 +12,8 @@ O shell sort tem uma ideia muito similar ao insertion sort. Na verdade, podemos 
 ::: Revisão: Insertion sort
 A ideia do insertion sort é bem similar a como ordenamos cartas de baralho. Um índice percorre todo o vetor e aloca os elementos em dois grupos: dos ordenados e dos não-ordenados. 
 
-Primeiramente, assumimos que o primeiro elemento já está ordenado, e todo os outros elementos fazem parte do grupo dos não ordenados. E então, para cada elemento do grupo dos não-ordenados iremos retirá-lo e compará-lo com cada elemento do grupo dos elementos ordenados, ata que se encontre um elemento maior do que ele, podendo assim, inserí-lo no grupo dos elementos ordenados de modo a manter a ordem.
-
-Note que no insertion sort cada elemento é comparado com o elemento **consecutivo** a ele.
+Primeiramente, assumimos que o primeiro elemento já está ordenado, e todo os outros elementos fazem parte do grupo dos não ordenados. E então, para cada elemento do grupo dos não-ordenados iremos retirá-lo e compará-lo com cada elemento do grupo dos elementos ordenados, até que se encontre um elemento maior do que ele, podendo assim, inserí-lo no grupo dos elementos ordenados de modo a manter a ordem. 
+Note que no insertion sort cada elemento é comparado com o elemento **consecutivo** a ele. 
 
 ![](insertion-sort1.png)
 :::
@@ -28,7 +30,11 @@ Imagine o custo de levar o número 9 (maior número do vetor) para a última pos
 :::
 ???
 
-Foi tentando mitigar essa desvantagem no uso do Insertion Sort que o **Shell Sort** foi pensado. Sua ideia é primeiro ordenar os elementos mais distantes uns dos outros e ir diminuindo o intervalo até que ele seja 1, finalizando a ordenação. Vale ressaltar que os intervalos são diminuídos a partir da sequência usada, que é definida pelo usuário com base em suas necessidades.
+Foi tentando mitigar essa desvantagem no uso do Insertion Sort que o **Shell Sort** foi pensado. Sua ideia é primeiro ordenar os elementos mais distantes uns dos outros e ir diminuindo o intervalo até que ele seja 1, finalizando a ordenação. Em outras palavras, o que acontece é que a cada iteração uma versão do insertion sort é calcula sobre um subvetor. 
+
+!!!
+OBS: ressaltar que os intervalos são diminuídos a partir da sequência usada, que é definida pelo usuário com base em suas necessidades.
+!!!
 
 ??? Exercicio
 Tente analisar em que situação o shell sort será igual ao insertion sort.
@@ -39,21 +45,20 @@ Tente analisar em que situação o shell sort será igual ao insertion sort.
 :::
 ???
 
-??? Exercicio
+??? Insertion Sort X Shell Sort
 Com essas diferenças em mente, pense em um comparativo entre esses dois algoritimos de ordenação:
-
-::: Insertion Sort X Shell Sort
 
 * Na ordenação pelo Insertion Sort, movemos os elementos apenas uma posição à frente. Esse fator em muitos momentos pode ser uma desvantagem, especialmente quando um elemento precisa ser movido muito à frente, e assim, muitos movimentos serão mais precisos. A ideia do Shell Sort é permitir a troca de itens distantes, possibilitando uma organização mais rápida. 
 
 * O Shell Sort organiza os elementos analisando sublistas separadas por um intervalo que o usuário escolhe o padrão, até que ele seja 1 (quando o algoritimo passa a ser um Insertion Sort). Escolhendo bem esse padrão, fazendo um estudo e adequando para a sua respectiva necessidade, é possível fazer com que o algoritmo seja muito mais rápido e eficiente. 
-:::
+
 ???
+
 
 Primeira ideia
 ---------
 
-A base do desenvolvimento do Shell Sort se dá da seguinte maneira: em um vetor de n elementos determina-se um intervalo *h* que inicialmente começa em n/2. Esse intervalo é utilizado para comparar dois valores do vetor separados por um intervalo de distância. 
+A base do desenvolvimento do Shell Sort se dá da seguinte maneira: em um vetor de n elementos determina-se um intervalo *h* que iremos adotar como n/2. Esse intervalo é utilizado para comparar dois valores do vetor separados por um intervalo de distância. 
 
 !!! OBS
  Neste handout, por simplicidade, vamos implementar a sequência original do shell sort, a qual o intervalo é dividido por dois a cada iteração. Lembre-se que a escolha da sequência irá variar de acordo com as necessidades de aplicação desse algoritmo.
@@ -70,7 +75,9 @@ O uso dessas diferentes intervalos infuenciará na complexidade final do algorí
 
 Essa ideia pode ser observada no exemplo abaixo, na qual o primeiro elemento é comparado com o 5 elemento, o segundo é comparado ao 6, e por assim em diante, até chegar ao final do vetor.
 
-![](comparacoes.png)
+
+![](comparacoes2.png)
+
 
 Nessa comparação, se o elemento de menor índice do vetor, for maior que o elemento de maior índice, **invertem-se as posições**. É desta forma que é possível ordenar os elementos distantes um do outro de forma mais rápida do que a do insertion sort.
 
@@ -80,7 +87,7 @@ Em outras palavras, a ideia geral é a seguinte:
 
 ``` txt
 intervalo = n/2
-para cada intervalo maior que 0:
+enquanto intervalo maior que 0:
     para cada intervalo em v, enquanto h>0:
         ordene os elementos separados pelo intervalo
     intervalo/=2
@@ -91,11 +98,11 @@ Como mencionado, a ideia é que o vetor seja percorrido a cada iteração, e a c
 
 ![](shell-sort1.png)
 
-Para percorrer o vetor a cada iteração, a ideia é que i comece em n/2 e j comece valendo 0. Desta maneira, se v[j] for maior do que v[i], inverte-se a posição desses elementos. Assim iremos incrementando o valor de i e j, comparando os elementos dessas posicoes até que se tenha chegado ao final do vetor e i seja igual a n-1.
+Para percorrer o vetor a cada iteração, a ideia é que i comece em $n/2$ e j comece valendo 0. Desta maneira, se $v[j]$ for maior do que $v[i]$, inverte-se a posição desses elementos. Assim iremos incrementando o valor de i e j, comparando os elementos dessas posicoes até que se tenha chegado ao final do vetor e i seja igual a $n-1$.
 
 ``` txt
 intervalo = n/2
-para cada intervalo maior que 0:
+enquanto intervalo maior que 0:
     i = intervalo
     j = i-intervalo
     para cada intervalo em v enquanto i<n:
@@ -121,12 +128,13 @@ fim da iteracao 2: v = {1 3 5 8}
                    h = 1
 ``` 
 :::
+???
 
-Note que para realizar a troca, é necessário armazenar v[i] em uma variável temporária, assim como fizemos para o insertion sort, e se essa condição for satisfeita, copiar v[j] para v[i] e colocar a variável temporária em v[j] para que a troca seja feita.
+Note que para realizar a troca, é necessário armazenar $v[i]$ em uma variável temporária, assim como fizemos para o insertion sort, e se essa condição for satisfeita, copiar $v[j]$ para $v[i]$ e colocar a variável temporária em $v[j]$ para que a troca seja feita.
 
 ``` txt
 intervalo = n/2
-para cada intervalo maior que 0:
+enquanto intervalo maior que 0:
     i = intervalo
     j = i-intervalo
     para cada intervalo em v enquanto i<n:
@@ -143,7 +151,7 @@ Na verdade, está faltando algo - precisamos comparar TODOS os elementos distant
 
 ``` txt
 intervalo = n/2
-para cada intervalo maior que 0:
+enquanto intervalo maior que 0:
     i = intervalo
     j = i
     para cada intervalo em v enquanto i<n:
@@ -189,78 +197,123 @@ Se você quiser, tem um site bem legal que dá pra visualizar linha a linha a ex
 Complexidade
 ---------
 
-Use a receita da [Aula 7](https://ensino.hashi.pro.br/desprog/aula/7/) para estimar a complexidade do shellsort.
+Usando a receita da [Aula 7](https://ensino.hashi.pro.br/desprog/aula/7/) para estimar a complexidade do shellsort para o pior caso.
+
+Lembrando do código:
+
+``` c
+void shellSort(int v[], int n) {
+    for (int h = n / 2; h > 0; h /= 2) {
+        for (int i = h; i < n; i += 1) {
+            int temp = v[i];
+            for (int j = i; j >= h && v[j - h] > temp; j -= h) {
+                v[j] = v[j - h];
+            }
+            v[j] = temp;
+        }
+    }
+}
+```
+
+Para determinar a complexidade, vamos considerar que x é a quantidade de iterações do segundo loop y do loop mais interno em função de i.
+
+??? Exercicio
+Determine a quantidade de iterações do primeiro loop interno (x), e do segundo interno y. Em seguida, tente enumerar os valores de i para as iterações do primeiro loop interno.
 
 ::: Gabarito
-``` txt
-Considerando que y é a quantidade de iterações do segundo loop e z do loop mais interno.
-
-
-**1) Quantidade de iterações do primeiro loop interno (x):**
-
 Contador começa de h e aumenta em 1 enquanto for menor que n.
 
 Depois de x-1 iterações, a condição ainda vale.
-h + 1(x-1) < n
-h + 1x - 1 < n
-x < n - h + 1
+$$h + 1(x-1) < n$$
+
+$$h + 1x - 1 < n$$
+
+$$x < n - h + 1$$
 
 Depois de x iterações, a condição não vale.
-h + 1x >= n
-x >= n - h
+$$h + 1x >= n$$
 
-(n-h) <= x < (n-h+1)
+$$x >= n - h$$
 
-
-
-**2) Quantidade de iterações do segundo loop interno (y):**
+$$(n-h) <= x < (n-h+1)$$
 
 No pior caso, o contador começa de i e diminui em h enquanto for maior igual que h.
 
 Depois de y-1 iterações, a condição ainda vale.
-i - h(y-1) >= h
-i - hy + h >= h
-- hy >= -i
 
-y <= i/h
+$$i - h(y-1) >= h$$
 
+$$i - hy + h >= h$$
 
+$$hy >= -i$$
 
-**3) Valor de i ao longo do primeiro loop interno:**
+$$y <= i/h$$
 
-i = h, h+1, h+2, ..., h + (x-1)
+Valores de i ao longo do primeiro loop interno:
 
+$$i = h, h+1, h+2, ..., h + (x-1)$$
+:::
+???
 
+??? Exercicio
+Determine o limitante para as iterações de todas as execuções do segundo loop interno:
 
-**4) Limitante para as iterações de todas as execuções do segundo loop interno:**
+::: Gabarito
+$$((h / h) + ((h + 1) / h) + ((h + 2) / h) + ... + (h + (x-1)) / h)$$
 
-((h / h) + ((h + 1) / h) + ((h + 2) / h) + ... + (h + (x-1)) / h)
-= 1 + (h + 1) / h + (h + 2)/ h + ... + (h + x + 1) / h
+$$= 1 + (h + 1) / h + (h + 2)/ h + ... + (h + x + 1) / h$$
 
-Soma de PA com:
+Isso é uma soma de PA com:
 - primeiro elemento 1;
-- último elemento (h + x + 1) / h;
+- último elemento $(h + x + 1) / h$;
 - número de elementos x.
 
-= ((1 + (h + x + 1) / h) * x) / 2
-= (h + h + x + 1) * x / 2
-= 2hx + x^2 + x/ 2
+$$= ((1 + (h + x + 1) / h) * x) / 2$$
 
-Como (n-h) <= x < (n-h+1), podemos concluir que a complexidade é menor que:
-  2h(n-h+1) + (n-h+1)^2 + (n-h+1)/ 2
-= (-h^2 - h + n^2 + 3n + 2)/2
-= **O(n^2 - h^2)**
+$$= (h + h + x + 1) * x / 2$$
 
-Portanto é a complexidade é **O(n^2)**.
-```
+$$= 2hx + x^2 + x/ 2$$
 :::
+???
 
-Aplicações e recomendações do shell sort 
---------- 
-O melhor caso será quando o vetor já estiver quase ou completamente ordenado, uma vez que serão feitas menos comparações. Analogamente, o pior caso será aquele em que o vetor estiver quase ou completamente desordenado.
+??? Exercicio
+A partir dessa soma, e dos limitantes, determine a complexidade final do pior caso. 
 
-Além disso, este algoritmo é considerado instável, dado que ele não mantém a ordem original dos elementos iguais. Vale ressaltar também quem ele não demanda memória adicional.
+::: Gabarito
+Como:
+$$(n-h) <= x < (n-h+1)$$
 
+Podemos concluir que a complexidade é menor que:
+
+$$2h(n-h+1) + (n-h+1)^2 + (n-h+1)/ 2$$
+
+$$= (-h^2 - h + n^2 + 3n + 2)/2$$
+
+$$= O(n^2 - h^2)$$
+
+Portanto é a complexidade é:
+$$O(n^2)$$
+:::
+???
+
+O melhor caso será quando o vetor já estiver quase ou completamente ordenado, uma vez que serão feitas menos comparações. Por isso, o if interno nunca vai ser verdadeiro, fazendo o loop interno ser constante.
+
+Analogamente, o pior caso será aquele em que o vetor estiver quase ou completamente desordenado. Sendo i o valor do intervalo, agora o loop será percorrido $<= n/i$ vezes . No loop do meio, será percorrido $<= n^2/i$ vezes. Já o loop mais externo vai entrar um número equivalente à progressão aritmética de $n^2/2^x$ , com x sendo inicialmente 0 e aumentando de 1 em 1 vez. Com isso, resulta em uma complexidade de $O(n^2)$ .
+
+Complexidade de Memória Adicional e Estabilidade
+---------
+
+??? Exercicio
+
+Considerando o que vimos até agora sobre o shell sort, o que se pode afirmar sobre a instabilidade e memória adicional:
+
+::: Gabarito
+O shell Sort é considerado instável, dado que ele não mantém a ordem original dos elementos iguais. Vale ressaltar também quem ele não demanda memória adicional, dado que ele não demanda o uso de outro vetor para ordenar, e raliza todas as trocas utilizando o mesmo array.
+:::
+???
+
+Resumo Shell Sort
+---------
 
 |            **recomendacao de tempo na pratica**         ||
 |:---------------------:|:--------------------------------:|
@@ -308,3 +361,4 @@ Referências
 * https://dcm.ffclrp.usp.br/~augusto/teaching/icii/Ordenacao-em-Vetores-Metodos-Avancados-Apresentacao.pdf
 * https://www.educative.io/edpresso/what-is-a-shell-sort
 * https://www.codingeek.com/algorithms/shell-sort-algorithm-explanation-implementation-and-complexity/
+* https://stackoverflow.com/questions/12767588/time-complexity-for-shell-sort
